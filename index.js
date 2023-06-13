@@ -52,10 +52,22 @@ function winOrLose(winSpin, currentBalance, betAmt) {
   return currentBalance;
 }
 
+function wait(timeout) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(console.log("hi")), timeout);
+  });
+}
+
 async function spinTheWheel() {
   try {
     const response = await prompt("Do you want to spin the wheel?");
     if (response === "y") {
+      for (let i = 0; i < 15; i++) {
+        let wholeSlot = slotMachine();
+        console.log(wholeSlot[0]);
+        await wait(150);
+        console.clear();
+      }
       return slotMachine();
     } else if (result === "n") {
       return false;
@@ -77,6 +89,7 @@ async function mainMenu() {
     const userInput = prompt(mainMenu);
 
     if (userInput === "1") {
+      2;
       console.log("Your current balance is: $" + currentBalance);
     } else if (userInput === "2") {
       const betAmtInput = "How much would you like to bet?";
@@ -87,6 +100,7 @@ async function mainMenu() {
         );
       } else {
         let winSpin = await spinTheWheel();
+
         if (winSpin === false) {
           continue;
         } else {
