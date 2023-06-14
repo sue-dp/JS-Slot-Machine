@@ -86,35 +86,40 @@ async function mainMenu() {
   while (true) {
     const mainMenu =
       "Please choose from the following options:\n1: Balance Check\n2: Place a Bet\n3: Quit";
-    const userInput = prompt(mainMenu);
 
-    if (userInput === "1") {
-      2;
-      console.log("Your current balance is: $" + currentBalance);
-    } else if (userInput === "2") {
-      const betAmtInput = "How much would you like to bet?";
-      const betAmt = prompt(betAmtInput);
-      if (betAmt > currentBalance) {
-        console.log(
-          "Please choose an amount equal to or lower than $" + currentBalance
-        );
-      } else {
-        let winSpin = await spinTheWheel();
+    if (currentBalance === 0) {
+      console.log("You're a L.O.S.E.R.");
+      break;
+    } else {
+      const userInput = prompt(mainMenu);
 
-        if (winSpin === false) {
-          continue;
+      if (userInput === "1") {
+        2;
+        console.log("Your current balance is: $" + currentBalance);
+      } else if (userInput === "2") {
+        const betAmtInput = "How much would you like to bet?";
+        const betAmt = prompt(betAmtInput);
+        if (betAmt > currentBalance) {
+          console.log(
+            "Please choose an amount equal to or lower than $" + currentBalance
+          );
         } else {
-          console.log(winSpin[0]);
-          currentBalance = winOrLose(winSpin, currentBalance, betAmt);
-          console.log("Your current balance is: $" + currentBalance);
+          let winSpin = await spinTheWheel();
+          if (winSpin === false) {
+            continue;
+          } else {
+            console.log(winSpin[0]);
+            currentBalance = winOrLose(winSpin, currentBalance, betAmt);
+            console.log("Your current balance is: $" + currentBalance);
+          }
         }
+      } else if (userInput === "3") {
+        console.log("Thank you, See you next time!");
+        break;
+      } else if (userInput === null) {
+        console.log("Thank you, See you next time!");
+        break;
       }
-    } else if (userInput === "3") {
-      console.log("Thank you, See you next time!");
-      break;
-    } else if (userInput === null) {
-      console.log("Thank you, See you next time!");
-      break;
     }
   }
 }
